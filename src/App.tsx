@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import './App.css'
-import TypeTest from './components/TypeTest'
+import TypeWritter from './components/TypeWritter'
 
 function App() {
   return (
     <div className="">
-      <TypeTest />
+      <TypeWritter />
     </div>
   )
 }
