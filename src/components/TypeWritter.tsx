@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import MOCK_PARAGRAPHS from '../constants/paragraphs'
+import { Input } from '@nextui-org/input'
+import { Textarea } from '@nextui-org/input'
 
 function TypeWritter() {
   const [paragraph, setParagraph] = useState(MOCK_PARAGRAPHS[0])
@@ -8,7 +10,7 @@ function TypeWritter() {
   const [inputLetterIndex, setInputLetterIndex] = useState(0)
   const [correctLetters, setCorrectLetters] = useState(0)
   const [wrongLetters, setWrongLetters] = useState(0)
-  const [timer, setTimer] = useState(10)
+  const [timer, setTimer] = useState(30)
   const [timerStart, setTimerStart] = useState(false)
   const [gameStatus, setGameStatus] = useState(true)
   const [charStatuses, setCharStatuses] = useState<
@@ -40,9 +42,15 @@ function TypeWritter() {
       return newStatuses
     })
 
-    currentLetter === expectedChar && charStatuses[currentIndex] == 'untyped'
-      ? setCorrectLetters(prev => prev + 1)
-      : setWrongLetters(prev => prev + 1)
+    if (gameStatus == true) {
+      currentLetter === expectedChar && charStatuses[currentIndex] == 'untyped'
+        ? setCorrectLetters(prev => prev + 1)
+        : setWrongLetters(prev => prev + 1)
+    }
+  }
+
+  const stopInput = (gamestatus: boolean) => {
+    gamestatus == false ? 'isDisabled' : ''
   }
 
   const letterClass = (wordIndex: number, letterIndex: number): string => {
@@ -98,10 +106,16 @@ function TypeWritter() {
   }, [timerStart, timer])
 
   return (
-    <div className="m-4 flex flex-col bg-gray-100">
-      <h1 className="text-center">Here is you sample</h1>
-      <p>{timer}</p>
-      <p className="">
+    <div className="m-4 flex flex-col gap-5 shadow-md">
+      <h1 className="text-center">Welcome to SwiftKey!</h1>
+      <p>
+        Level up your typing game with SwiftKey - race against the clock and
+        crush your personal bests! Whether you're a typing newbie or a keyboard
+        warrior, get ready to blast through words and have fun doing it.
+      </p>
+      <p>Start typying to start the game</p>
+      <p>Time remaining: {timer}</p>
+      <p className="font-mono">
         {paragraph.split(' ').map((words, indexwords) => {
           return (
             <span
@@ -123,18 +137,19 @@ function TypeWritter() {
           )
         })}
       </p>
-      <span className={timer != 0 ? 'hidden' : ''}>
-        {' '}
-        Correct letters: {correctLetters}
-        Incorrect letters letters: {wrongLetters}
-        {gameStatus}
-      </span>
-      <span>Status: {gameStatus}</span>
+      <div className={timer != 0 ? 'hidden' : ''}>
+        <h1> This are your results: </h1>
+        <div className="flex justify-evenly">
+          <p>Correct letters: {correctLetters}</p>
+          <p>Incorrect letters letters: {wrongLetters}</p>
+        </div>
+      </div>
       <input
         autoFocus
+        disabled={!gameStatus}
         onChange={handleInput}
-        className={`focus:ring-gray-500' w-full rounded border border-gray-300 p-3 focus:border-transparent focus:outline-none focus:ring-2 ${gameStatus ? '' : 'hidden'}`}
-      ></input>
+        className={'opacity-0'}
+      />
     </div>
   )
 }
