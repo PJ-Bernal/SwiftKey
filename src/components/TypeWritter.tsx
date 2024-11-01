@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import MOCK_PARAGRAPHS from '../constants/paragraphs'
-import { Input } from '@nextui-org/input'
-import { Textarea } from '@nextui-org/input'
 
 function TypeWritter() {
   const [paragraph, setParagraph] = useState(MOCK_PARAGRAPHS[0])
