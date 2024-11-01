@@ -16,10 +16,12 @@ function TypeWritter() {
   const [charStatuses, setCharStatuses] = useState<
     Array<'correct' | 'incorrect' | 'untyped'>
   >([])
+  const [hasStartedTyping, setHasStartedTyping] = useState(false)
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(gameStatus)
-    console.log('outside: ', timer)
+    if (!hasStartedTyping) {
+      setHasStartedTyping(true)
+    }
     const cursorWordPosition = e.target.value.split(' ').length - 1
     setCursorWordPosition(cursorWordPosition)
 
@@ -27,7 +29,7 @@ function TypeWritter() {
     setInputCurrentChar(currentLetter)
 
     const currentLetterInCurrentWordCount =
-      e.target.value.split(' ')[cursorWordPosition].length - 1
+      e.target.value.split(' ')[cursorWordPosition].length
     setInputLetterIndex(currentLetterInCurrentWordCount)
 
     setTimerStart(true)
@@ -47,10 +49,6 @@ function TypeWritter() {
         ? setCorrectLetters(prev => prev + 1)
         : setWrongLetters(prev => prev + 1)
     }
-  }
-
-  const stopInput = (gamestatus: boolean) => {
-    gamestatus == false ? 'isDisabled' : ''
   }
 
   const letterClass = (wordIndex: number, letterIndex: number): string => {
@@ -82,6 +80,16 @@ function TypeWritter() {
     return { selectedPara, booleanArray: Array(numberOfWords).fill('') }
   }
 
+  const renderCursor = (wordIndex: number, letterIndex: number) => {
+    const isCurrentWord = wordIndex === cursorWordPosition
+    const isCurrentLetterPosition = letterIndex === inputLetterIndex
+
+    if (isCurrentWord && isCurrentLetterPosition) {
+      return <span className="cursor-blink">|</span>
+    }
+    return null
+  }
+
   useEffect(() => {
     gameStatus == false ? console.log('end of the game') : ''
   }, [gameStatus])
@@ -94,11 +102,9 @@ function TypeWritter() {
     const gametime = setInterval(() => {
       if (timer > 0 && timerStart) {
         setTimer(prev => prev - 1)
-        console.log(timer)
       }
       if (timer <= 1) {
         setGameStatus(false)
-        console.log('inside: ', gameStatus)
       }
     }, 1000)
 
@@ -107,6 +113,22 @@ function TypeWritter() {
 
   return (
     <div className="m-4 flex flex-col gap-5 shadow-md">
+      <style>
+        {`
+          .cursor-blink {
+            position: absolute;
+            animation: blink 1s step-end infinite;
+            color: black;
+            font-weight: normal;
+            margin-left: -5px;
+          }
+          
+          @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+          }
+        `}
+      </style>
       <h1 className="text-center">Welcome to SwiftKey!</h1>
       <p>
         Level up your typing game with SwiftKey - race against the clock and
@@ -118,21 +140,33 @@ function TypeWritter() {
       <p className="font-mono">
         {paragraph.split(' ').map((words, indexwords) => {
           return (
-            <span
-              key={indexwords}
-              className={`${cursorWordPosition == indexwords ? 'rounded-md bg-gray-300' : ''}`}
-            >
+            <span key={indexwords} className="relative">
+              {((!hasStartedTyping && indexwords === 0) ||
+                (indexwords === cursorWordPosition &&
+                  inputLetterIndex === 0)) && (
+                <span className="cursor-blink">|</span>
+              )}
               {words.split('').map((letters, indexLetters) => {
+                const globalIndex =
+                  paragraph.split(' ').slice(0, indexwords).join(' ').length +
+                  (indexwords > 0 ? 1 : 0) +
+                  indexLetters
+                console.log(globalIndex)
                 return (
                   <span
                     key={indexwords - indexLetters}
-                    className={`font-medium ${letterClass(indexwords, indexLetters)}`}
+                    className={`font-medium ${letterClass(indexwords, indexLetters)} }`}
                   >
                     {letters}
+                    {renderCursor(indexwords, indexLetters + 1)}
                     {}
                   </span>
                 )
-              })}{' '}
+              })}
+              {indexwords === cursorWordPosition &&
+                inputLetterIndex === words.length && (
+                  <span className="cursor-blink">|</span>
+                )}{' '}
             </span>
           )
         })}
