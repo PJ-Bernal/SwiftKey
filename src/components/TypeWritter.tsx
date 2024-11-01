@@ -10,7 +10,7 @@ function TypeWritter() {
   const [inputLetterIndex, setInputLetterIndex] = useState(0)
   const [correctLetters, setCorrectLetters] = useState(0)
   const [wrongLetters, setWrongLetters] = useState(0)
-  const [timer, setTimer] = useState(30)
+  const [timer, setTimer] = useState(5)
   const [timerStart, setTimerStart] = useState(false)
   const [gameStatus, setGameStatus] = useState(true)
   const [charStatuses, setCharStatuses] = useState<
@@ -43,12 +43,16 @@ function TypeWritter() {
         currentLetter === expectedChar ? 'correct' : 'incorrect'
       return newStatuses
     })
+  }
 
-    if (gameStatus == true) {
-      currentLetter === expectedChar && charStatuses[currentIndex] == 'untyped'
-        ? setCorrectLetters(prev => prev + 1)
-        : setWrongLetters(prev => prev + 1)
-    }
+  const finalScore = () => {
+    charStatuses.map(scores => {
+      if (scores === 'correct') {
+        setCorrectLetters(prev => prev + 1)
+      } else if (scores === 'incorrect') {
+        setWrongLetters(prev => prev + 1)
+      }
+    })
   }
 
   const letterClass = (wordIndex: number, letterIndex: number): string => {
@@ -92,6 +96,7 @@ function TypeWritter() {
 
   useEffect(() => {
     gameStatus == false ? console.log('end of the game') : ''
+    finalScore()
   }, [gameStatus])
 
   useEffect(() => {
@@ -117,7 +122,7 @@ function TypeWritter() {
         {`
           .cursor-blink {
             position: absolute;
-            animation: blink 1s step-end infinite;
+            animation: blink 1.3s ease-in-out infinite;
             color: black;
             font-weight: normal;
             margin-left: -5px;
@@ -139,6 +144,7 @@ function TypeWritter() {
       <p>Time remaining: {timer}</p>
       <p className="font-mono">
         {paragraph.split(' ').map((words, indexwords) => {
+          console.log(charStatuses)
           return (
             <span key={indexwords} className="relative">
               {((!hasStartedTyping && indexwords === 0) ||
