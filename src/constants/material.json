@@ -1,0 +1,69 @@
+{
+  "languages": [
+    {
+      "language": "JS",
+      "Data Types": [
+        "Understanding primitive types (string, number, boolean, null, undefined, symbol, and bigint) is fundamental as they are immutable and stored by value. Each primitive type has specific behaviors and methods.",
+        "let str = 'hello world';",
+        "const num = 42;",
+        "let bool = true;",
+        "const sym = Symbol('description');",
+        "let empty = null;",
+        "let notDefined;",
+        "typeof str === 'string' && typeof num === 'number';",
+
+        "Objects are reference types that store collections of key-value pairs. When you assign an object to a new variable, you're creating a reference to the same object, not copying it.",
+        "const user = { name: 'John', age: 30 };",
+        "const userRef = user;",
+        "userRef.age = 31; // Changes both userRef and user",
+        "console.log(user.age); // 31",
+        "const deepCopy = JSON.parse(JSON.stringify(user));",
+
+        "Arrays are special objects optimized for ordered data. They come with built-in methods for data manipulation and can store mixed types.",
+        "const mixed = [1, 'two', { three: 3 }, [4, 5]];",
+        "const numbers = Array.from({ length: 5 }, (_, i) => i + 1);",
+        "const filtered = numbers.filter(n => n % 2 === 0);",
+        "const mapped = numbers.map(n => n * 2);"
+      ],
+      "Template Strings": [
+        "Template literals enable multiline strings and expressions that are evaluated and become part of the string. They provide cleaner string interpolation and maintain formatting.",
+        "const user = 'John';",
+        "const greeting = `Hello ${user}!`;",
+        "const sum = `The sum of 2 + 2 is ${2 + 2}`;",
+        "const multiline = `\n  First line\n  Second line\n`;",
+
+        "Template literals are especially useful for creating HTML templates with dynamic content.",
+        "const className = 'highlight';",
+        "const content = 'Dynamic Content';",
+        "const html = `<div class='${className}'>${content}</div>`;",
+        "const list = `<ul>${['a','b','c'].map(item => `<li>${item}</li>`).join('')}</ul>`;",
+
+        "Template literals can be used with tagged functions for custom string processing.",
+        "function myTag(strings, ...values) { return strings[0] + values.join('') }",
+        "const tagged = myTag`Hello ${user}!`;",
+        "const price = myTag`The total is: $${59.99}`;",
+        "const nested = `Outer ${`Inner ${user}`}`;"
+      ],
+      "Type Conversion": [
+        "Converting strings to numbers has multiple approaches, each with specific use cases. parseInt and parseFloat are commonly used for explicit conversion.",
+        "const strNum = parseInt('42', 10);",
+        "const floatNum = parseFloat('42.5');",
+        "const converted = Number('123');",
+        "const unaryPlus = +'42';",
+
+        "The Number constructor and parseFloat handle decimal numbers differently, which is important for precise calculations.",
+        "console.log(parseFloat('12.00'));",
+        "console.log(Number('12.345').toFixed(2));",
+        "console.log(parseInt('12.99', 10));",
+        "console.log(+'12.88');",
+
+        "Converting numbers to strings can be done with different methods depending on the desired format.",
+        "const num = 42;",
+        "const str1 = String(num);",
+        "const str2 = num.toString();",
+        "const str3 = num.toFixed(2);",
+        "const str4 = `${num}`;"
+      ]
+    }
+  ]
+}
