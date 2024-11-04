@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, memo } from 'react'
 import MOCK_PARAGRAPHS from '../constants/paragraphs'
 
 interface CharStatus {
@@ -12,11 +12,44 @@ interface Stats {
   wordsPerMinute: number
 }
 
+// Separate Letter component that only re-renders when its props change
+interface LetterProps {
+  letter: string
+  status: 'correct' | 'incorrect' | 'untyped'
+  isCurrentPosition: boolean
+  showCursor: boolean
+}
+
+const Letter = memo(
+  ({ letter, status, isCurrentPosition, showCursor }: LetterProps) => {
+    const colorClass =
+      status === 'correct'
+        ? 'text-green-500'
+        : status === 'incorrect'
+          ? 'text-red-500'
+          : 'text-black'
+
+    return (
+      <span className={`font-medium ${colorClass}`}>
+        {showCursor && isCurrentPosition && (
+          <span className="cursor-blink" aria-hidden="true">
+            |
+          </span>
+        )}
+        {letter}
+      </span>
+    )
+  }
+)
+
+Letter.displayName = 'Letter'
+
 function TypeWriter() {
   const [paragraph, setParagraph] = useState('')
   const [charStatuses, setCharStatuses] = useState<CharStatus[]>([])
   const [currentInput, setCurrentInput] = useState('')
   const [wordPositions, setWordPositions] = useState<number[]>([])
+  const [letterIndices, setLetterIndices] = useState<number[]>([])
 
   const [cursor, setCursor] = useState({
     wordPosition: 0,
@@ -26,7 +59,7 @@ function TypeWriter() {
   const [gameState, setGameState] = useState({
     isActive: true,
     hasStarted: false,
-    timeRemaining: 5, // Changed to 60 seconds for better WPM calculation
+    timeRemaining: 60, // Changed to 60 seconds for better WPM calculation
   })
 
   const [stats, setStats] = useState<Stats>({
@@ -39,6 +72,7 @@ function TypeWriter() {
   const getRandomParagraph = () => {
     const selectedPara =
       MOCK_PARAGRAPHS[Math.floor(Math.random() * MOCK_PARAGRAPHS.length)]
+
     return {
       selectedPara,
       initialCharStatuses: selectedPara.split('').map(char => ({
@@ -97,6 +131,21 @@ function TypeWriter() {
     setWordPositions(positions)
   }, [paragraph])
 
+  useEffect(() => {
+    const indices: number[] = []
+    const words = paragraph.split(' ')
+    let globalIndex = 0
+
+    words.forEach((word, wordIndex) => {
+      word.split('').forEach(() => {
+        indices.push(globalIndex++)
+      })
+      if (wordIndex < words.length - 1) globalIndex++ // Account for spaces
+    })
+
+    setLetterIndices(indices)
+  }, [paragraph])
+
   // Simplified input handler
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value
@@ -131,16 +180,16 @@ function TypeWriter() {
     // Update char statuses directly
     const newStatuses = paragraph.split('').map((char, index) => ({
       char,
-      status:
-        index < inputValue.length
-          ? char === inputValue[index]
-            ? 'correct'
-            : 'incorrect'
-          : 'untyped',
+      status: (index < inputValue.length
+        ? char === inputValue[index]
+          ? 'correct'
+          : 'incorrect'
+        : 'untyped') as 'correct' | 'incorrect' | 'untyped',
     }))
     setCharStatuses(newStatuses)
 
     // Update stats in real-time
+
     const correctCount = newStatuses.filter(s => s.status === 'correct').length
     const incorrectCount = newStatuses.filter(
       s => s.status === 'incorrect'
@@ -156,24 +205,45 @@ function TypeWriter() {
   }
 
   // Simplified render helpers
-  const getLetterClass = (wordIndex: number, letterIndex: number): string => {
-    const globalIndex = wordPositions[wordIndex] + letterIndex
-    const status = charStatuses[globalIndex]?.status
-
-    return `font-medium ${
-      status === 'correct'
-        ? 'text-green-500'
-        : status === 'incorrect'
-          ? 'text-red-500'
-          : 'text-black'
-    }`
-  }
 
   useEffect(() => {
     const { selectedPara, initialCharStatuses } = getRandomParagraph()
     setParagraph(selectedPara)
     setCharStatuses(initialCharStatuses)
   }, [])
+
+  const renderParagraph = () => {
+    const words = paragraph.split(' ')
+
+    return words.map((word, wordIndex) => (
+      <span key={wordIndex} className="relative">
+        {word.split('').map((letter, letterIndex) => {
+          const globalIndex = wordPositions[wordIndex] + letterIndex
+
+          const isCurrentPosition =
+            wordIndex === cursor.wordPosition &&
+            letterIndex === cursor.letterIndex
+
+          return (
+            <Letter
+              key={`${wordIndex}-${letterIndex}`}
+              letter={letter}
+              status={charStatuses[globalIndex]?.status ?? 'untyped'}
+              isCurrentPosition={isCurrentPosition}
+              showCursor={true}
+            />
+          )
+        })}
+        {wordIndex === cursor.wordPosition &&
+          cursor.letterIndex === word.length && (
+            <span className="cursor-blink" aria-hidden="true">
+              |
+            </span>
+          )}
+        {wordIndex < words.length - 1 ? ' ' : ''}
+      </span>
+    ))
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8">
@@ -198,14 +268,6 @@ function TypeWriter() {
                 </p>
                 <p className="text-2xl font-semibold text-gray-900">
                   {gameState.timeRemaining}s
-                </p>
-              </div>
-              <div className="text-center">
-                <p className="text-sm uppercase tracking-wide text-gray-500">
-                  WPM
-                </p>
-                <p className="text-2xl font-semibold text-gray-900">
-                  {stats.wordsPerMinute}
                 </p>
               </div>
             </div>
@@ -235,33 +297,7 @@ function TypeWriter() {
               }
             `}
           </style>
-          <p className="font-mono text-lg leading-relaxed">
-            {paragraph.split(' ').map((word, wordIndex) => (
-              <span key={wordIndex} className="relative">
-                {word.split('').map((letter, letterIndex) => (
-                  <span
-                    key={`${wordIndex}-${letterIndex}`}
-                    className={getLetterClass(wordIndex, letterIndex)}
-                  >
-                    {wordIndex === cursor.wordPosition &&
-                      letterIndex === cursor.letterIndex && (
-                        <span className="cursor-blink" aria-hidden="true">
-                          |
-                        </span>
-                      )}
-                    {letter}
-                  </span>
-                ))}
-                {wordIndex === cursor.wordPosition &&
-                  cursor.letterIndex === word.length && (
-                    <span className="cursor-blink" aria-hidden="true">
-                      |
-                    </span>
-                  )}
-                {wordIndex < paragraph.split(' ').length - 1 ? ' ' : ''}
-              </span>
-            ))}
-          </p>
+          <p className="font-mono">{renderParagraph()}</p>
         </div>
 
         {/* Results Modal */}
