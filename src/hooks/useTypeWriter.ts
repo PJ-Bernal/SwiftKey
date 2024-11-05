@@ -34,7 +34,7 @@ export function useTypeWriter() {
   const [gameState, setGameState] = useState<GameState>({
     isActive: true,
     hasStarted: false,
-    timeRemaining: 60,
+    timeRemaining: 20,
   })
 
   const [stats, setStats] = useState<Stats>({
