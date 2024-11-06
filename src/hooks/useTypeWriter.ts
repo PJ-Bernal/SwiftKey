@@ -1,10 +1,13 @@
-// hooks/useTypeWriter.ts
 import { useState, useEffect } from 'react'
 import MOCK_PARAGRAPHS from '../constants/paragraphs'
 
 interface CharStatus {
   char: string
   status: 'correct' | 'incorrect' | 'untyped'
+}
+
+interface LetterStats {
+  [key: string]: number
 }
 
 interface Stats {
@@ -24,7 +27,6 @@ export function useTypeWriter() {
   const [charStatuses, setCharStatuses] = useState<CharStatus[]>([])
   const [currentInput, setCurrentInput] = useState('')
   const [wordPositions, setWordPositions] = useState<number[]>([])
-  const [letterIndices, setLetterIndices] = useState<number[]>([])
 
   const [cursor, setCursor] = useState({
     wordPosition: 0,
@@ -53,6 +55,28 @@ export function useTypeWriter() {
         status: 'untyped' as const,
       })),
     }
+  }
+
+  const resetGame = () => {
+    // Reset all state to initial values
+    const { selectedPara, initialCharStatuses } = getRandomParagraph()
+    setParagraph(selectedPara)
+    setCharStatuses(initialCharStatuses)
+    setCurrentInput('')
+    setCursor({
+      wordPosition: 0,
+      letterIndex: 0,
+    })
+    setGameState({
+      isActive: true,
+      hasStarted: false,
+      timeRemaining: 1,
+    })
+    setStats({
+      correctLetters: 0,
+      incorrectLetters: 0,
+      wordsPerMinute: 0,
+    })
   }
 
   const calculateFinalStats = () => {
@@ -154,20 +178,6 @@ export function useTypeWriter() {
   }, [paragraph])
 
   // Calculate letter indices
-  useEffect(() => {
-    const indices: number[] = []
-    const words = paragraph.split(' ')
-    let globalIndex = 0
-
-    words.forEach((word, wordIndex) => {
-      word.split('').forEach(() => {
-        indices.push(globalIndex++)
-      })
-      if (wordIndex < words.length - 1) globalIndex++
-    })
-
-    setLetterIndices(indices)
-  }, [paragraph])
 
   // Initialize game
   useEffect(() => {
@@ -185,6 +195,6 @@ export function useTypeWriter() {
     stats,
     handleInput,
     wordPositions,
-    letterIndices,
+    resetGame,
   }
 }
