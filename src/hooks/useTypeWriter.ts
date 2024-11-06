@@ -18,11 +18,18 @@ interface GameState {
   timeRemaining: number
 }
 
+interface LetterStats {
+  [key: string]: number
+}
+
 export function useTypeWriter() {
   const [paragraph, setParagraph] = useState('')
   const [charStatuses, setCharStatuses] = useState<CharStatus[]>([])
   const [currentInput, setCurrentInput] = useState('')
   const [wordPositions, setWordPositions] = useState<number[]>([])
+  const [letterAsserts, setLetterAsserts] = useState<LetterStats>({})
+  const [letterFails, setLetterFails] = useState<LetterStats>({})
+  const [previousInputLength, setPreviousInputLength] = useState(0)
 
   const [cursor, setCursor] = useState({
     wordPosition: 0,
@@ -76,6 +83,8 @@ export function useTypeWriter() {
       incorrectLetters: 0,
       wordsPerMinute: 0,
     })
+    setLetterAsserts({})
+    setLetterFails({})
   }
 
   const calculateFinalStats = () => {
@@ -120,17 +129,39 @@ export function useTypeWriter() {
       letterIndex,
     })
 
-    const newStatuses = paragraph.split('').map(
-      (char, index): CharStatus => ({
+    // Only process the newly added character
+    if (inputValue.length > previousInputLength) {
+      const newCharIndex = inputValue.length - 1
+      const targetChar = paragraph[newCharIndex]
+      const inputChar = inputValue[newCharIndex]
+
+      if (targetChar === inputChar) {
+        setLetterAsserts(prev => ({
+          ...prev,
+          [targetChar]: (prev[targetChar] || 0) + 1,
+        }))
+      } else {
+        setLetterFails(prev => ({
+          ...prev,
+          [inputChar]: (prev[inputChar] || 0) + 1,
+        }))
+      }
+    }
+
+    setPreviousInputLength(inputValue.length)
+
+    const newStatuses = paragraph.split('').map((char, index): CharStatus => {
+      if (index < inputValue.length) {
+        return {
+          char,
+          status: char === inputValue[index] ? 'correct' : 'incorrect',
+        }
+      }
+      return {
         char,
-        status:
-          index < inputValue.length
-            ? char === inputValue[index]
-              ? 'correct'
-              : 'incorrect'
-            : 'untyped',
-      })
-    )
+        status: 'untyped',
+      }
+    })
 
     setCharStatuses(newStatuses)
 
@@ -195,5 +226,7 @@ export function useTypeWriter() {
     handleInput,
     wordPositions,
     resetGame,
+    letterAsserts,
+    letterFails,
   }
 }

@@ -50,7 +50,21 @@ export function TypeWriter() {
     handleInput,
     wordPositions,
     resetGame,
+    letterAsserts,
+    letterFails,
   } = useTypeWriter()
+
+  const getSortedLetters = (stats: Record<string, number>) => {
+    return Object.entries(stats)
+      .sort(([, a], [, b]) => b - a)
+      .reduce(
+        (obj, [key, value]) => ({
+          ...obj,
+          [key]: value,
+        }),
+        {}
+      )
+  }
 
   const renderParagraph = () => {
     const words = paragraph.split(' ')
@@ -239,6 +253,35 @@ export function TypeWriter() {
                   />
                 </div>
               </div>
+
+              <CardContent className="grid grid-cols-2 gap-4">
+                <div>
+                  <h3 className="mb-2 font-semibold">Accurate characters</h3>
+                  <div className="space-y-1">
+                    {Object.entries(getSortedLetters(letterAsserts)).map(
+                      ([letter, count]) => (
+                        <div key={letter} className="flex justify-between">
+                          <span className="font-mono">{`${letter == ' ' ? 'space' : letter}`}</span>
+                          <span>{count}</span>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <h3 className="mb-2 font-semibold">Inaccurate characters</h3>
+                  <div className="space-y-1">
+                    {Object.entries(getSortedLetters(letterFails)).map(
+                      ([letter, count]) => (
+                        <div key={letter} className="flex justify-between">
+                          <span className="font-mono">{`${letter == ' ' ? 'untyped letters' : letter}`}</span>
+                          <span>{count}</span>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+              </CardContent>
             </CardContent>
           </Card>
         )}
