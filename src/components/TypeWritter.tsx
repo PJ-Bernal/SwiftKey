@@ -100,7 +100,7 @@ export function TypeWriter() {
           <CardContent className="pb-5">
             <div className="flex items-center justify-between">
               <div className="">
-                <p className="text-muted-foreground text-sm">Time</p>
+                <p className="text-sm text-muted-foreground">Time</p>
                 <p className="text-2xl font-bold">{gameState.timeRemaining}s</p>
               </div>
 
@@ -114,7 +114,7 @@ export function TypeWriter() {
               {
                 <Button onClick={resetGame} variant="outline" className="flex">
                   <RefreshCcw className="" />
-                  Restart Test
+                  Type again
                 </Button>
               }
             </div>
@@ -168,7 +168,7 @@ export function TypeWriter() {
                 <Card className="">
                   <CardContent className="pt-6">
                     <div className="text-center">
-                      <p className="text-muted-foreground text-sm">WPM</p>
+                      <p className="text-sm text-muted-foreground">WPM</p>
                       <p className="text-3xl font-bold">
                         {stats.wordsPerMinute}
                       </p>
@@ -178,7 +178,7 @@ export function TypeWriter() {
                 <Card>
                   <CardContent className="pt-6">
                     <div className="text-center">
-                      <p className="text-muted-foreground text-sm">Accuracy</p>
+                      <p className="text-sm text-muted-foreground">Accuracy</p>
                       <p className="text-3xl font-bold">
                         {Math.round(
                           (stats.correctLetters /
@@ -193,7 +193,7 @@ export function TypeWriter() {
                 <Card>
                   <CardContent className="pt-6">
                     <div className="text-center">
-                      <p className="text-muted-foreground text-sm">
+                      <p className="text-sm text-muted-foreground">
                         Characters
                       </p>
                       <p className="text-3xl font-bold">

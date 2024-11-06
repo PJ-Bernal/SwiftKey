@@ -6,10 +6,6 @@ interface CharStatus {
   status: 'correct' | 'incorrect' | 'untyped'
 }
 
-interface LetterStats {
-  [key: string]: number
-}
-
 interface Stats {
   correctLetters: number
   incorrectLetters: number
@@ -36,7 +32,7 @@ export function useTypeWriter() {
   const [gameState, setGameState] = useState<GameState>({
     isActive: true,
     hasStarted: false,
-    timeRemaining: 20,
+    timeRemaining: 5,
   })
 
   const [stats, setStats] = useState<Stats>({
@@ -58,7 +54,10 @@ export function useTypeWriter() {
   }
 
   const resetGame = () => {
-    // Reset all state to initial values
+    // First, set game to inactive to prevent any ongoing updates
+
+    // Use setTimeout to ensure all states are updated before resetting
+
     const { selectedPara, initialCharStatuses } = getRandomParagraph()
     setParagraph(selectedPara)
     setCharStatuses(initialCharStatuses)
@@ -70,7 +69,7 @@ export function useTypeWriter() {
     setGameState({
       isActive: true,
       hasStarted: false,
-      timeRemaining: 1,
+      timeRemaining: 5, // Also, you probably want this to be 60 not 1
     })
     setStats({
       correctLetters: 0,
