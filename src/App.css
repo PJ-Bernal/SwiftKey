@@ -1,0 +1,27 @@
+.keyboard {
+  border-radius: 50px;
+  background: linear-gradient(145deg, #ffffff, #dadada);
+  box-shadow:
+    6px 6px 12px #cecece,
+    -6px -6px 12px #ffffff;
+}
+
+.tooltip {
+  position: absolute;
+  visibility: hidden;
+  background-color: rgba(86, 84, 84, 0.8);
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+  pointer-events: none;
+  transition: color 400ms;
+  transition-delay: 300ms;
+}
+
+.tooltip:hover {
+  color: red;
+  transition: color 100ms;
+  transition-delay: 0ms;
+}

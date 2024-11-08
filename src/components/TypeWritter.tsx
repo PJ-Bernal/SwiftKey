@@ -7,6 +7,7 @@ import { Progress } from '@/components/ui/progress'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { RefreshCcw } from 'lucide-react'
+import KeyBoardHeatMap from './AfterTypingResults'
 
 interface LetterProps {
   letter: string
@@ -66,6 +67,37 @@ export function TypeWriter() {
       )
   }
 
+  const sampleData = {
+    E: 120,
+    T: 90,
+    A: 80,
+    O: 75,
+    I: 70,
+    N: 65,
+    S: 60,
+    R: 55,
+    H: 50,
+    L: 45,
+    D: 40,
+    C: 35,
+    U: 30,
+    M: 25,
+    F: 20,
+    P: 15,
+    G: 10,
+    W: 8,
+    Y: 6,
+    B: 4,
+    V: 3,
+    K: 2,
+    X: 1,
+    J: 1,
+    Q: 1,
+    Z: 1,
+  }
+  const results = { ...letterAsserts }
+  letterAsserts
+
   const renderParagraph = () => {
     const words = paragraph.split(' ')
 
@@ -98,6 +130,8 @@ export function TypeWriter() {
       </span>
     ))
   }
+  console.log(letterAsserts, letterFails, 'results:', results)
+  console.log(sampleData)
 
   return (
     <div className="min-h-screen p-5">
@@ -285,6 +319,9 @@ export function TypeWriter() {
             </CardContent>
           </Card>
         )}
+      </div>
+      <div className="max-w-4xl">
+        <KeyBoardHeatMap usageData={results} />
       </div>
     </div>
   )
