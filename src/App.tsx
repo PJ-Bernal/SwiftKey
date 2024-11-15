@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import './App.css'
 import TypeWritter from './components/TypeWritter'
+import { AppRouter } from './AppRouter'
 
 function App() {
   return (
-    <div className="">
+    <AppRouter>
       <TypeWritter />
-    </div>
+    </AppRouter>
   )
 }
 

@@ -30,6 +30,7 @@ export function useTypeWriter() {
   const [letterAsserts, setLetterAsserts] = useState<LetterStats>({})
   const [letterFails, setLetterFails] = useState<LetterStats>({})
   const [previousInputLength, setPreviousInputLength] = useState(0)
+  const [gameTime, setGameTime] = useState<number>(60)
 
   const [cursor, setCursor] = useState({
     wordPosition: 0,
@@ -66,6 +67,7 @@ export function useTypeWriter() {
     // Use setTimeout to ensure all states are updated before resetting
 
     const { selectedPara, initialCharStatuses } = getRandomParagraph()
+
     setParagraph(selectedPara)
     setCharStatuses(initialCharStatuses)
     setCurrentInput('')
@@ -76,7 +78,7 @@ export function useTypeWriter() {
     setGameState({
       isActive: true,
       hasStarted: false,
-      timeRemaining: 5, // Also, you probably want this to be 60 not 1
+      timeRemaining: 60, // Also, you probably want this to be 60 not 1
     })
     setStats({
       correctLetters: 0,
@@ -85,6 +87,18 @@ export function useTypeWriter() {
     })
     setLetterAsserts({})
     setLetterFails({})
+    const newTime = 60
+    setGameTime(newTime)
+  }
+
+  const addTime = (time: number) => {
+    const newTime = gameTime + time
+    setGameTime(newTime)
+    setGameState({
+      isActive: true,
+      hasStarted: false,
+      timeRemaining: newTime,
+    })
   }
 
   const calculateFinalStats = () => {
@@ -228,5 +242,6 @@ export function useTypeWriter() {
     resetGame,
     letterAsserts,
     letterFails,
+    addTime,
   }
 }

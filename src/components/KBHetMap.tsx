@@ -1,8 +1,7 @@
-// Types.ts
-interface KeyData {
-  key: string
-  usage: number
-}
+import React, { useEffect, useRef } from 'react'
+import * as d3 from 'd3'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 
 interface KeyboardData {
   [key: string]: number
@@ -14,61 +13,58 @@ interface KeyboardHeatmapProps {
   height?: number
 }
 
-// KeyboardHeatmap.tsx
-import React, { useEffect, useRef } from 'react'
-import * as d3 from 'd3'
-
-const KeyboardHeatmap: React.FC<KeyboardHeatmapProps> = ({
+const KeyBoardHeatMap: React.FC<KeyboardHeatmapProps> = ({
   usageData,
-  width = 700,
-  height = 300,
+  width = 600,
+  height = 250,
 }) => {
   const svgRef = useRef<SVGSVGElement>(null)
 
-  // Keyboard layout configuration
   const keyboardLayout = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-    ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.'],
+    ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
   ]
 
-  const keySize = 45
-  const padding = 15
-  const legendHeight = 80
+  const keySize = 50
+  const padding = 8
+  const legendHeight = 100
   const totalHeight = height + legendHeight
 
   useEffect(() => {
     if (!svgRef.current) return
 
-    // Clear previous content
     d3.select(svgRef.current).selectAll('*').remove()
 
     const svg = d3.select(svgRef.current)
 
-    // Create color scale
     const colorScale = d3
       .scaleSequential()
       .domain([0, d3.max(Object.values(usageData)) || 0])
-      .interpolator(t => {
-        if (t === 0) return '#f0f0f0'
-        const midPoint = 0.5
-        return t <= midPoint
-          ? d3.interpolateRgb('#f0f0f0', '#ff7043')(t * 2)
-          : d3.interpolateRgb('#ff7043', '#7e57c2')((t - midPoint) * 2)
-      })
+      .interpolator(d3.interpolateViridis)
 
-    // Function to get contrasting text color
     const getTextColor = (backgroundColor: string): string => {
       const rgb = d3.color(backgroundColor)?.rgb()
-      if (!rgb) return '#000000'
-      const brightness = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000
+      if (!rgb) return '#ffffff'
+      const brightness = (rgb.r * 298 + rgb.g * 587 + rgb.b * 114) / 1000
       return brightness > 128 ? '#000000' : '#ffffff'
     }
 
-    // Create tooltip
-    const tooltip = d3.select('body').append('div').classed('tooltip', true)
+    const tooltip = d3
+      .select('body')
+      .append('div')
+      .attr('class', 'tooltip')
+      .style('position', 'absolute')
+      .style('visibility', 'hidden')
+      .style('background-color', 'rgba(0, 0, 0, 0.8)')
+      .style('color', '#fff')
+      .style('padding', '8px 12px')
+      .style('border-radius', '6px')
+      .style('font-size', '14px')
+      .style('font-weight', 'bold')
+      .style('pointer-events', 'none')
+      .style('box-shadow', '0 4px 6px rgba(0, 0, 0, 0.1)')
 
-    // Draw keyboard
     keyboardLayout.forEach((row, rowIndex) => {
       const rowOffset = rowIndex * 0.5 * keySize
 
@@ -84,27 +80,16 @@ const KeyboardHeatmap: React.FC<KeyboardHeatmapProps> = ({
             `translate(${(keySize + padding) * keyIndex + rowOffset + padding * 2}, ${(keySize + padding) * rowIndex + padding})`
           )
 
-        // Key background
         keyGroup
           .append('rect')
           .attr('width', keySize)
           .attr('height', keySize)
-          .attr('rx', 4)
+          .attr('rx', 12)
           .attr('fill', keyColor)
-          .attr('stroke', '#999')
-          .attr('stroke-width', 1)
-          .on('mouseover', event => {
-            tooltip
-              .style('visibility', 'visible')
-              .html(`<strong>Key: ${key}</strong><br/>Usage: ${usage}`)
-              .style('left', `${event.pageX + 10}px`)
-              .style('top', `${event.pageY - 28}px`)
-          })
-          .on('mouseout', () => {
-            tooltip.style('visibility', 'hidden')
-          })
+          .attr('stroke', '#ffffff')
+          .attr('stroke-width', 2)
+          .style('filter', 'drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1))')
 
-        // Key letter
         keyGroup
           .append('text')
           .attr('x', keySize / 2)
@@ -112,22 +97,31 @@ const KeyboardHeatmap: React.FC<KeyboardHeatmapProps> = ({
           .attr('text-anchor', 'middle')
           .attr('dominant-baseline', 'middle')
           .attr('fill', textColor)
-          .style('font-family', '')
-          .style('font-size', '18px')
-          .style('font-weight', '')
+          .style('font-family', 'monospace')
+          .style('font-size', '24px')
+          .style('font-weight', 'regular')
           .style('user-select', 'none')
           .text(key)
 
-        // Usage number
+        keyGroup
+          .append('text')
+          .attr('x', keySize - 8)
+          .attr('y', keySize - 8)
+          .attr('text-anchor', 'end')
+          .attr('dominant-baseline', 'auto')
+          .attr('fill', textColor)
+          .style('font-family', 'Inter, sans-serif')
+          .style('font-size', '12px')
+          .style('font-weight', 'bold')
+          .style('user-select', 'none')
+          .text(usage)
       })
     })
 
-    // Add legend
-    const legendWidth = width * 0.7
+    const legendWidth = width * 0.6
     const legendX = (width - legendWidth) / 2
-    const legendY = height + 20
+    const legendY = height + 40
 
-    // Create gradient
     const gradient = svg
       .append('defs')
       .append('linearGradient')
@@ -135,11 +129,10 @@ const KeyboardHeatmap: React.FC<KeyboardHeatmapProps> = ({
       .attr('x1', '0%')
       .attr('x2', '100%')
 
-    const gradientStops = [
-      { offset: '0%', color: '#f0f0f0' },
-      { offset: '50%', color: '#ff7043' },
-      { offset: '100%', color: '#7e57c2' },
-    ]
+    const gradientStops = d3.range(0, 1.1, 0.1).map(t => ({
+      offset: `${t * 100}%`,
+      color: colorScale(t * d3.max(Object.values(usageData))!),
+    }))
 
     gradient
       .selectAll('stop')
@@ -149,7 +142,6 @@ const KeyboardHeatmap: React.FC<KeyboardHeatmapProps> = ({
       .attr('offset', d => d.offset)
       .attr('stop-color', d => d.color)
 
-    // Draw legend
     const legendGroup = svg
       .append('g')
       .attr('transform', `translate(${legendX}, ${legendY})`)
@@ -159,11 +151,11 @@ const KeyboardHeatmap: React.FC<KeyboardHeatmapProps> = ({
       .attr('width', legendWidth)
       .attr('height', 20)
       .attr('fill', 'url(#usage-gradient)')
-      .attr('rx', 4)
-      .attr('stroke', '#999')
-      .attr('stroke-width', 1)
+      .attr('rx', 10)
+      .attr('stroke', '#ffffff')
+      .attr('stroke-width', 2)
+      .style('filter', 'drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1))')
 
-    // Add legend labels
     const maxUsage = d3.max(Object.values(usageData)) || 0
     const legendLabels = [0, maxUsage / 2, maxUsage]
     const labelPositions = [0, legendWidth / 2, legendWidth]
@@ -172,24 +164,24 @@ const KeyboardHeatmap: React.FC<KeyboardHeatmapProps> = ({
       legendGroup
         .append('text')
         .attr('x', labelPositions[i])
-        .attr('y', 35)
+        .attr('y', 40)
         .attr('text-anchor', i === 0 ? 'start' : i === 1 ? 'middle' : 'end')
-        .style('font-family', 'Courier New, monospace')
-        .style('font-size', '12px')
-        .style('fill', '#333')
+        .style('font-family', 'Inter, sans-serif')
+        .style('font-size', '14px')
+        .style('font-weight', 'bold')
+        .style('fill', '#333333')
         .text(Math.round(value))
     })
 
-    // Legend title
     legendGroup
       .append('text')
       .attr('x', legendWidth / 2)
-      .attr('y', -5)
+      .attr('y', -15)
       .attr('text-anchor', 'middle')
-      .style('font-family', 'Courier New, monospace')
-      .style('font-size', '12px')
+      .style('font-family', 'Inter, sans-serif')
+      .style('font-size', '18px')
       .style('font-weight', 'bold')
-      .style('fill', '#333')
+      .style('fill', '#333333')
       .text('Key Usage Frequency')
 
     return () => {
@@ -198,8 +190,15 @@ const KeyboardHeatmap: React.FC<KeyboardHeatmapProps> = ({
   }, [usageData, width, height])
 
   return (
-    <svg ref={svgRef} width={width} height={totalHeight} className="keyboard" />
+    <div className="bg-gradient-to-br from-purple-50 to-blue-50 p-5 dark:from-gray-800 dark:to-gray-900">
+      <svg
+        ref={svgRef}
+        width={width}
+        height={totalHeight}
+        className="keyboard mx-auto"
+      />
+    </div>
   )
 }
 
-export default KeyboardHeatmap
+export default KeyBoardHeatMap
