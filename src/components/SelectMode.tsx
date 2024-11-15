@@ -42,11 +42,20 @@ export default function SelectMode() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Link to="/learnermode">
-                  <Button size="lg" className="w-full sm:w-auto">
-                    Start learner mode{' '}
-                  </Button>
-                </Link>
+                <div className="group relative">
+                  <Link to="/">
+                    <Button disabled size="lg" className="w-full sm:w-auto">
+                      Start learner mode{' '}
+                    </Button>
+                  </Link>
+
+                  {/* Tooltip */}
+                  <div className="pointer-events-none absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-gray-900 px-3 py-1 text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    Under developing
+                    {/* Tooltip arrow */}
+                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 rotate-180 border-4 border-transparent border-b-gray-900"></div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>

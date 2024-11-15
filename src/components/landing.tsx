@@ -150,15 +150,17 @@ export default function Component() {
               <TabsContent value="classic">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Code Typing Practice</CardTitle>
+                    <CardTitle>Classic Typing Practice</CardTitle>
                     <CardDescription>
                       Enhance your typing skilss while discovering Manitoba's
                       curiosities
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="relative p-6 font-mono text-lg">
-                    <style>
-                      {`
+
+                  <CardContent className="relative px-6 font-mono text-lg">
+                    <div className="space-y-1 rounded-md bg-muted p-2">
+                      <style>
+                        {`
         .cursor-blink {
           position: absolute;
           animation: blink 1.3s ease-in-out infinite;
@@ -172,15 +174,24 @@ export default function Component() {
           50% { opacity: 0; }
         }
       `}
-                    </style>
-                    {renderParagraph()}
-                    <input
-                      autoFocus
-                      value={currentInput}
-                      onChange={handleInput}
-                      className="absolute inset-0 h-full w-full opacity-0"
-                    />
+                      </style>
+
+                      {renderParagraph()}
+                      <input
+                        autoFocus
+                        value={currentInput}
+                        onChange={handleInput}
+                        className="absolute inset-0 h-full w-full opacity-0"
+                      />
+                    </div>
                   </CardContent>
+                  <CardFooter>
+                    <Link to="/mode">
+                      <div className="flex w-full justify-center">
+                        <Button className="max-w-md">Begin Code Test</Button>
+                      </div>
+                    </Link>
+                  </CardFooter>
                 </Card>
               </TabsContent>
               <TabsContent value="code">
@@ -196,12 +207,14 @@ export default function Component() {
                     <div className="space-y-1">
                       <Label htmlFor="code-text">Sample Code</Label>
                       <div className="rounded-md bg-muted p-2">
-                        <code className="text-sm">
-                          {`function fibonacci(n) {
+                        <pre>
+                          <code className="text-sm">
+                            {`function fibonacci(n) {
   if (n <= 1) return n;
   return fibonacci(n - 1) + fibonacci(n - 2);
 }`}
-                        </code>
+                          </code>
+                        </pre>
                       </div>
                     </div>
                     <div className="space-y-1">
@@ -210,7 +223,11 @@ export default function Component() {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <Button className="w-full">Begin Code Test</Button>
+                    <Link to="/mode">
+                      <div className="flex w-full justify-center">
+                        <Button className="max-w-md">Begin Code Test</Button>
+                      </div>
+                    </Link>
                   </CardFooter>
                 </Card>
               </TabsContent>
