@@ -1,50 +1,121 @@
-# React + TypeScript + Vite
+# 🚀 SwiftKey - Master Your Typing Skills
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SwiftKey is a modern typing practice application designed for both casual users and developers. Built with React, TypeScript, and cutting-edge web technologies, it offers an engaging platform to improve typing speed and accuracy while learning to code.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### For All Users
 
-## Expanding the ESLint configuration
+- **Real-Time Feedback** - Instant visual feedback with color-coded characters (green for correct, red for incorrect)
+- **Flexible Practice Sessions** - Add 30/60 seconds or reset timer as needed
+- **Detailed Analytics** - Comprehensive character-by-character accuracy tracking
+- **Interactive Heat Map** - Visual representation of keystroke frequency and accuracy
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### For Developers
 
-- Configure the top-level `parserOptions` property like this:
+- **Language-Specific Practice** - Multiple programming languages and frameworks:
+  - JavaScript/TypeScript
+  - React
+  - HTML/CSS
+  - And more...
+- **Structured Learning Path** - Progressive difficulty levels:
+  - Basic fundamentals
+  - Intermediate concepts
+  - Advanced techniques
+- **Curated Code Snippets** - Carefully crafted examples focusing on best practices and real-world scenarios
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🛠️ Tech Stack
+
+- **Frontend Framework**: React
+- **Language**: TypeScript
+- **Styling**:
+  - TailwindCSS
+  - shadcn/ui components
+- **Animations**: Framer Motion
+- **Routing**: React Router
+- **Code Quality**: ESLint + Prettier
+
+## 🚀 Getting Started
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/yourusername/swiftkey.git
+cd swiftkey
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. **Install dependencies**
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm install
 ```
+
+3. **Start the development server**
+
+```bash
+npm run dev
+```
+
+4. **Open your browser**
+
+```
+Navigate to http://localhost:5173
+```
+
+## 🎯 Usage
+
+### Classic Mode
+
+1. Select 'Classic Mode' from the homepage
+2. Begin typing the displayed text
+3. Watch your progress with real-time feedback
+4. View your results including WPM and accuracy
+
+### Code Learner Mode
+
+1. Choose your preferred programming language
+2. Select difficulty level (Basic/Intermediate/Advanced)
+3. Pick a specific topic (e.g., "JavaScript Data Types")
+4. Practice typing actual code snippets
+5. Learn while improving your typing speed
+
+## 📊 Features in Detail
+
+### Analytics Dashboard
+
+- Words Per Minute (WPM) tracking
+- Character-specific accuracy rates
+- Interactive heat map visualization
+- Progress tracking over time
+
+### Developer-Focused Content
+
+- Real-world code examples
+- Best practices implementation
+- Progressive difficulty scaling
+- Multiple language support
+
+## 🎨 UI/UX Features
+
+- **Modern Design**: Clean and intuitive interface using shadcn/ui
+- **Responsive Layout**: Fully responsive design for all screen sizes
+- **Smooth Animations**: Polished transitions using Framer Motion
+- **Dark/Light Mode**: Support for system theme preferences
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+---
+
+Made with ❤️ by a future web developer
