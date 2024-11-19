@@ -42,7 +42,7 @@ function HeroSection() {
     <section className="relative overflow-hidden py-20 sm:py-32 lg:pb-32 xl:pb-36">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center text-center">
-          <h1 className="mb-8 max-w-4xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl md:text-8xl/tight">
+          <h1 className="mb-8 max-w-4xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text pb-1 text-5xl font-bold tracking-tight text-transparent sm:text-7xl md:text-8xl/tight">
             Master Typing,
             <br />
             Conquer Coding

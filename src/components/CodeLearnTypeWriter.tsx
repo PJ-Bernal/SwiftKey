@@ -112,14 +112,15 @@ export function CodeTypeWriter() {
   return (
     <Layout>
       <main className="flex-1">
-        <div className="mx-auto max-w-4xl space-y-6">
+        <div className="m-7 mx-auto max-w-4xl space-y-6">
           {/* Header Section */}
-          <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-4xl">Classic mode</CardTitle>
-              <p className="text-muted-foreground">
-                You will have 60 seconds to write as fast as you can. In this
-                mode you can reset the content
+          <Card className="mx-auto w-full max-w-3xl bg-white/75 backdrop-blur-lg">
+            <CardHeader className="space-y-2 text-center">
+              <CardTitle className="text-2xl sm:text-4xl">
+                Code learner mode
+              </CardTitle>
+              <p className="text-sm text-muted-foreground sm:text-base">
+                You will have 60 seconds to write as fast as you can.
               </p>
             </CardHeader>
             <CardContent className="pb-5">
@@ -164,10 +165,10 @@ export function CodeTypeWriter() {
           </Card>
 
           {/* Typing Area */}
-          <Card className="relative">
+          <Card className="relative mx-auto w-full max-w-3xl rounded-xl border-2 border-white/20">
             {' '}
             {/* Add a container div */}
-            <CardContent className={`p-6 font-mono text-lg`}>
+            <CardContent className="overflow-x-hidden rounded-lg bg-transparent p-4 font-mono text-base sm:p-6 sm:text-lg">
               <style>
                 {`
                   .cursor-blink {
