@@ -1,5 +1,11 @@
 import { ReactNode } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import {
+  BrowserRouter,
+  HashRouter,
+  Navigate,
+  Route,
+  Routes,
+} from 'react-router-dom'
 import TypeWriter from './components/TypeWritter'
 import SelectMode from './components/SelectMode'
 import { CodeTypeWriter } from './components/CodeLearnTypeWriter'
@@ -12,7 +18,7 @@ interface Props {
 
 export const AppRouter = ({ children }: Props) => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/index" element={<Landing />} />
@@ -21,6 +27,6 @@ export const AppRouter = ({ children }: Props) => {
         <Route path="/features" element={<Features />} />
         <Route path="/codemode" element={<CodeTypeWriter />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
