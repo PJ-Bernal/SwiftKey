@@ -12,7 +12,8 @@ import { Link } from 'react-router-dom'
 import CharacterStats from './CharacterStats'
 import KeyboardHeatmap from './KBHetMap'
 import DetailedResults from './DetailResults'
-import { useCodeLearner } from '@/hooks/useCodeLearner'
+import Layout from './Layout'
+import { useCodeWriter } from '@/hooks/useCodeLearner'
 
 interface LetterProps {
   letter: string
@@ -59,8 +60,7 @@ export function CodeTypeWriter() {
     letterAsserts,
     letterFails,
     addTime,
-    content,
-  } = useCodeLearner()
+  } = useCodeWriter()
 
   const getSortedLetters = (stats: Record<string, number>) => {
     return Object.entries(stats)
@@ -75,36 +75,6 @@ export function CodeTypeWriter() {
   }
 
   const [showTimeButtons, setShowTimeButtons] = useState(false)
-
-  const sampleData = {
-    e: 120,
-    t: 90,
-    a: 80,
-    o: 75,
-    i: 70,
-    n: 65,
-    s: 60,
-    r: 55,
-    h: 50,
-    l: 45,
-    d: 40,
-    c: 35,
-    u: 30,
-    m: 25,
-    f: 20,
-    p: 15,
-    g: 10,
-    w: 8,
-    y: 6,
-    b: 4,
-    v: 3,
-    k: 2,
-    x: 1,
-    j: 1,
-    q: 1,
-    z: 1,
-  }
-  const results = { ...letterAsserts }
 
   const renderParagraph = () => {
     const words = paragraph.split(' ')
@@ -140,29 +110,7 @@ export function CodeTypeWriter() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-b from-background to-secondary/20">
-      <header className="flex h-14 items-center px-4 lg:px-6">
-        <div className="flex items-center justify-center">
-          <Keyboard className="h-6 w-6 text-primary" />
-          <Link to="/">
-            <span className="ml-2 text-lg font-bold">Swift Key</span>
-          </Link>
-        </div>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
-          <div className="text-sm font-medium underline-offset-4 hover:underline">
-            Features
-          </div>
-          <div className="text-sm font-medium underline-offset-4 hover:underline">
-            Pricing
-          </div>
-          <div className="text-sm font-medium underline-offset-4 hover:underline">
-            About
-          </div>
-          <div className="text-sm font-medium underline-offset-4 hover:underline">
-            Contact
-          </div>
-        </nav>
-      </header>
+    <Layout>
       <main className="flex-1">
         <div className="mx-auto max-w-4xl space-y-6">
           {/* Header Section */}
@@ -381,20 +329,7 @@ export function CodeTypeWriter() {
           )}
         </div>
       </main>
-      <footer className="flex w-full shrink-0 flex-col items-center gap-2 border-t px-4 py-6 sm:flex-row md:px-6">
-        <p className="text-xs text-gray-500 dark:text-gray-400">
-          © 2024 DevType. All rights reserved.
-        </p>
-        <nav className="flex gap-4 sm:ml-auto sm:gap-6">
-          <div className="text-xs underline-offset-4 hover:underline">
-            Terms of Service
-          </div>
-          <div className="text-xs underline-offset-4 hover:underline">
-            Privacy
-          </div>
-        </nav>
-      </footer>
-    </div>
+    </Layout>
   )
 }
 

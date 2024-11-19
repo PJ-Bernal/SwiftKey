@@ -75,37 +75,6 @@ export function TypeWriter() {
 
   const [showTimeButtons, setShowTimeButtons] = useState(false)
 
-  const sampleData = {
-    e: 120,
-    t: 90,
-    a: 80,
-    o: 75,
-    i: 70,
-    n: 65,
-    s: 60,
-    r: 55,
-    h: 50,
-    l: 45,
-    d: 40,
-    c: 35,
-    u: 30,
-    m: 25,
-    f: 20,
-    p: 15,
-    g: 10,
-    w: 8,
-    y: 6,
-    b: 4,
-    v: 3,
-    k: 2,
-    x: 1,
-    j: 1,
-    q: 1,
-    z: 1,
-  }
-  const results = { ...letterAsserts }
-  letterAsserts
-
   const renderParagraph = () => {
     const words = paragraph.split(' ')
 

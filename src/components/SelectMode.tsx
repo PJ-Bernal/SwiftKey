@@ -43,7 +43,7 @@ export default function SelectMode() {
               </CardHeader>
               <CardContent>
                 <div className="group relative">
-                  <Link to="/">
+                  <Link to="/codemode">
                     <Button disabled size="lg" className="w-full sm:w-auto">
                       Start learner mode{' '}
                     </Button>
