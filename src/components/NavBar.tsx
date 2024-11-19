@@ -18,7 +18,6 @@ export function NavBar() {
         <nav className="hidden space-x-4 md:flex">
           <NavLink to="/features">Features</NavLink>
           <NavLink to="/#about">About</NavLink>
-          <NavLink to="/contact">Contact</NavLink>
         </nav>
         <div className="hidden md:block">
           <Link to="/mode">
@@ -43,10 +42,11 @@ export function NavBar() {
           <nav className="flex flex-col items-center space-y-4 py-4">
             <NavLink to="/features">Features</NavLink>
             <NavLink to="/#about">About</NavLink>
-            <NavLink to="/contact">Contact</NavLink>
-            <Button className="w-full max-w-xs bg-gradient-to-r from-indigo-600 to-purple-600 text-white transition-all duration-200 hover:from-indigo-700 hover:to-purple-700">
-              Get Started
-            </Button>
+            <Link to="/mode">
+              <Button className="w-full max-w-xs bg-gradient-to-r from-indigo-600 to-purple-600 text-white transition-all duration-200 hover:from-indigo-700 hover:to-purple-700">
+                Get Started
+              </Button>
+            </Link>
           </nav>
         </div>
       )}

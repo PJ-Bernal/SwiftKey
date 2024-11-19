@@ -1,8 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
 import {
   Keyboard,
   Code,
@@ -149,13 +146,7 @@ function FeaturesSection() {
         </h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex flex-col items-center text-center"
-            >
+            <div key={index} className="flex flex-col items-center text-center">
               <div className="mb-4 rounded-full bg-indigo-100 p-3 dark:bg-indigo-900">
                 <feature.icon className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
               </div>
@@ -163,7 +154,7 @@ function FeaturesSection() {
               <p className="text-gray-600 dark:text-gray-400">
                 {feature.description}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -238,11 +229,8 @@ function PricingSection() {
         </h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
           {plans.map((plan, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
               className="flex flex-col rounded-xl bg-white p-6 shadow-lg dark:bg-gray-800"
             >
               <h3 className="mb-5 text-2xl font-bold">{plan.name}</h3>
@@ -262,12 +250,7 @@ function PricingSection() {
                   ))}
                 </ul>
               </div>
-              <Link to="/mode">
-                <Button className="mt-8 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700">
-                  Get Started
-                </Button>
-              </Link>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
