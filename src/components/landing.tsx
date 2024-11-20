@@ -200,7 +200,7 @@ function DemoSection() {
               />
 
               <div className="absolute inset-0 z-10 flex items-center justify-center text-lg font-semibold text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                In-real-time feedback with visual ques
+                In-real-time feedback with visual cues
               </div>
             </div>
 
@@ -213,7 +213,8 @@ function DemoSection() {
                 />
               </div>
               <div className="absolute inset-0 top-14 z-10 flex items-center justify-center text-lg font-semibold text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                In-real-time feedback with visual ques
+                Keyboard heatmap with key usage frequency based on asserts or
+                fails
               </div>
             </div>
           </div>
