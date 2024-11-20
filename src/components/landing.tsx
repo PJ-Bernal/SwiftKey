@@ -12,6 +12,11 @@ import { Link } from 'react-router-dom'
 import Layout from './Layout'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import GeneralResults from '../assets/General_results.avif'
+import TimeFeedBack from '../assets/In_real_time_feedback.webp'
+import HeatMap from '../assets/KB_heatmap.avif'
+import Restart from '../assets/Restar_add_time_options.avif'
+import Table from '../assets/Table.webp'
 
 export default function Landing() {
   const [email, setEmail] = useState('')
@@ -28,6 +33,7 @@ export default function Landing() {
       <main className="flex-1">
         <HeroSection />
         <FeaturesSection />
+
         <DemoSection />
 
         <PricingSection />
@@ -40,7 +46,7 @@ export default function Landing() {
 function HeroSection() {
   return (
     <section className="relative overflow-hidden py-20 sm:py-32 lg:pb-32 xl:pb-36">
-      <div className="container px-4 md:px-6">
+      <div className="container m-auto px-4 md:px-6">
         <div className="flex flex-col items-center text-center">
           <h1 className="mb-8 max-w-4xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text pb-1 text-5xl font-bold tracking-tight text-transparent sm:text-7xl md:text-8xl/tight">
             Master Typing,
@@ -70,41 +76,6 @@ function HeroSection() {
             </Button> */}
           </div>
         </div>
-      </div>
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <svg
-          className="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] dark:stroke-gray-700"
-          aria-hidden="true"
-        >
-          <defs>
-            <pattern
-              id="e813992c-7d03-4cc4-a2bd-151760b470a0"
-              width={200}
-              height={200}
-              x="50%"
-              y={-1}
-              patternUnits="userSpaceOnUse"
-            >
-              <path d="M100 200V.5M.5 .5H200" fill="none" />
-            </pattern>
-          </defs>
-          <svg
-            x="50%"
-            y={-1}
-            className="overflow-visible fill-gray-50 dark:fill-gray-900"
-          >
-            <path
-              d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
-              strokeWidth={0}
-            />
-          </svg>
-          <rect
-            width="100%"
-            height="100%"
-            strokeWidth={0}
-            fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)"
-          />
-        </svg>
       </div>
     </section>
   )
@@ -140,7 +111,7 @@ function FeaturesSection() {
 
   return (
     <section className="py-20 sm:py-20">
-      <div className="container px-4 md:px-6">
+      <div className="container m-auto px-4 md:px-6">
         <h2 className="mb-8 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text pb-5 text-center text-3xl font-bold tracking-tight text-transparent sm:text-5xl">
           Supercharge Your Coding Skills
         </h2>
@@ -163,12 +134,44 @@ function FeaturesSection() {
 }
 
 function DemoSection() {
+  const features = [
+    {
+      image: GeneralResults,
+      alt: 'Adaptive Learning',
+      description:
+        'Our AI-powered system adapts to your skill level, providing personalized exercises to improve your weaknesses.',
+    },
+    {
+      image: TimeFeedBack,
+      alt: 'Real Code Snippets',
+      description:
+        'Practice with actual code from popular libraries and frameworks, preparing you for real-world scenarios.',
+    },
+    {
+      image: HeatMap,
+      alt: 'Detailed Analytics',
+      description:
+        'Track your progress with comprehensive metrics, identifying areas for improvement and celebrating your achievements.',
+    },
+    {
+      image: Restart,
+      alt: 'Speed Challenges',
+      description:
+        'Compete against yourself or others in timed challenges to push your limits and improve rapidly.',
+    },
+    {
+      image: Table,
+      alt: 'Speed Challenges',
+      description:
+        'Compete against yourself or others in timed challenges to push your limits and improve rapidly.',
+    },
+  ]
   return (
     <section className="py-20 dark:bg-gray-900 sm:py-20">
-      <div className="container px-4 md:px-6">
+      <div className="container m-auto px-4 md:px-6">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-8">
           <div>
-            <h2 className="mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-5xl">
+            <h2 className="mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text pb-2 text-3xl font-semibold tracking-tight text-transparent sm:text-5xl">
               Experience the Power of Swift Key
             </h2>
             <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
@@ -181,16 +184,37 @@ function DemoSection() {
                 size="lg"
                 className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700"
               >
-                Start Free Trial
+                Start Typying now!
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </div>
-          <div className="relative aspect-video rounded-xl bg-gray-100 shadow-2xl dark:bg-gray-800">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Button size="lg" variant="outline" className="rounded-full">
-                Play Demo
-              </Button>
+          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 rounded-2xl p-6 md:grid-cols-2">
+            {/* First row */}
+
+            <div className="group relative overflow-hidden rounded-2xl bg-white p-4 shadow-md transition-all duration-300 hover:shadow-lg md:col-span-2">
+              <img
+                src={TimeFeedBack}
+                alt="Real Time Feedback"
+                className="h-full w-full rounded-2xl object-contain transition-all duration-300 group-hover:blur-sm"
+              />
+
+              <div className="absolute inset-0 z-10 flex items-center justify-center text-lg font-semibold text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                In-real-time feedback with visual ques
+              </div>
+            </div>
+
+            <div className="group relative overflow-hidden rounded-2xl bg-white p-4 shadow-md transition-all duration-300 hover:shadow-lg md:col-span-2">
+              <div className="h-64">
+                <img
+                  src={HeatMap}
+                  alt="Keyboard Heatmap"
+                  className="h-full w-full rounded-2xl object-contain transition-all duration-300 group-hover:blur-sm"
+                />
+              </div>
+              <div className="absolute inset-0 top-14 z-10 flex items-center justify-center text-lg font-semibold text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                In-real-time feedback with visual ques
+              </div>
             </div>
           </div>
         </div>

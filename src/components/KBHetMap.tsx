@@ -190,7 +190,7 @@ const KeyBoardHeatMap: React.FC<KeyboardHeatmapProps> = ({
   }, [usageData, width, height])
 
   return (
-    <div className="bg-gradient-to-br from-purple-50 to-blue-50 p-5 dark:from-gray-800 dark:to-gray-900">
+    <div className="w-full bg-gradient-to-br from-purple-50 to-blue-50 p-3 dark:from-gray-800 dark:to-gray-900 sm:p-4 md:p-5">
       <svg
         ref={svgRef}
         width={width}

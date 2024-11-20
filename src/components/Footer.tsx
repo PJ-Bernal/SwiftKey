@@ -7,7 +7,7 @@ export function Footer() {
             Empowering developers to code faster and more efficiently.
           </p>
 
-          <p className="my-1 text-center text-xs text-gray-600 dark:text-gray-400">
+          <p className="my-1 ml-auto text-center text-xs text-gray-600 dark:text-gray-400">
             © 2024 Swift Key. All rights reserved.
           </p>
         </div>
