@@ -15,7 +15,7 @@ interface KeyboardHeatmapProps {
 
 const KeyBoardHeatMap: React.FC<KeyboardHeatmapProps> = ({
   usageData,
-  width = 600,
+  width = 620,
   height = 250,
 }) => {
   const svgRef = useRef<SVGSVGElement>(null)

@@ -91,7 +91,7 @@ export function CodeTypeWriter() {
           return (
             <Letter
               key={`${wordIndex}-${letterIndex}`}
-              letter={letter}
+              letter={letter == '\n' ? 'aca' : letter}
               status={charStatuses[globalIndex]?.status ?? 'untyped'}
               isCurrentPosition={isCurrentPosition}
               showCursor={true}
@@ -113,7 +113,6 @@ export function CodeTypeWriter() {
     <Layout>
       <main className="flex-1">
         <div className="m-7 mx-auto max-w-4xl space-y-6">
-          {/* Header Section */}
           <Card className="mx-auto w-full max-w-3xl bg-white/75 backdrop-blur-lg">
             <CardHeader className="space-y-2 text-center">
               <CardTitle className="text-2xl sm:text-4xl">
@@ -124,41 +123,58 @@ export function CodeTypeWriter() {
               </p>
             </CardHeader>
             <CardContent className="pb-5">
-              <div className="flex items-center justify-center">
-                <div className={`-translate-x-20`}>
+              <div className="flex items-center justify-center gap-6 sm:flex-row sm:gap-8">
+                {/* Time Display */}
+                <div className="text-center sm:text-left">
                   <p className="text-sm text-muted-foreground">Time</p>
                   <p className="text-2xl font-bold">
                     {gameState.timeRemaining}s
                   </p>
                 </div>
 
-                {/* Add restart button */}
-
-                <div
-                  className={`flex translate-x-32 transform items-center gap-8`}
-                  onMouseEnter={() => setShowTimeButtons(true)}
-                  onMouseLeave={() => setShowTimeButtons(false)}
-                >
-                  {!showTimeButtons ? (
-                    <Button variant="outline">Need more time?</Button>
-                  ) : (
-                    <div className="flex gap-2">
-                      <Button onClick={() => addTime(30)} variant="outline">
-                        <CirclePlus />
-                        30
+                {/* Controls Section */}
+                <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-8">
+                  {/* Time Addition Buttons */}
+                  <div
+                    className="relative"
+                    onMouseEnter={() => setShowTimeButtons(true)}
+                    onMouseLeave={() => setShowTimeButtons(false)}
+                  >
+                    {!showTimeButtons ? (
+                      <Button variant="outline" className="whitespace-nowrap">
+                        Need more time?
                       </Button>
-                      <Button onClick={() => addTime(60)} variant="outline">
-                        <CirclePlus />
-                        60
-                      </Button>
-                    </div>
-                  )}
-                  <div>
-                    <Button onClick={resetGame} variant="outline" className="">
-                      <RefreshCcw className="" />
-                      Restart timer
-                    </Button>
+                    ) : (
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={() => addTime(30)}
+                          variant="outline"
+                          className="flex items-center gap-1"
+                        >
+                          <CirclePlus className="h-4 w-4" />
+                          <span>30</span>
+                        </Button>
+                        <Button
+                          onClick={() => addTime(60)}
+                          variant="outline"
+                          className="flex items-center gap-1"
+                        >
+                          <CirclePlus className="h-4 w-4" />
+                          <span>60</span>
+                        </Button>
+                      </div>
+                    )}
                   </div>
+
+                  {/* Restart Button */}
+                  <Button
+                    onClick={resetGame}
+                    variant="outline"
+                    className="flex items-center gap-2 whitespace-nowrap"
+                  >
+                    <RefreshCcw className="h-4 w-4" />
+                    Restart timer
+                  </Button>
                 </div>
               </div>
             </CardContent>

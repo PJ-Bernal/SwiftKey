@@ -51,8 +51,13 @@ export function useCodeWriter() {
   })
 
   const getRandomParagraph = () => {
+    const keys = Object.keys(material.javascript[0]['basic'])
+    const prop: string = keys[Math.floor(Math.random() * keys.length)]
+
     const selectedPara: string =
-      material.javascript[0]['basic']['DataTypes'].toString()
+      material.javascript[0]['basic'][prop][
+        Math.floor(Math.random() * keys.length)
+      ].toString()
     return {
       selectedPara,
       initialCharStatuses: selectedPara.split('').map(char => ({

@@ -17,6 +17,7 @@ import TimeFeedBack from '../assets/In_real_time_feedback.webp'
 import HeatMap from '../assets/KB_heatmap.avif'
 import Restart from '../assets/Restar_add_time_options.avif'
 import Table from '../assets/Table.webp'
+import InRealTime from '../assets/In_real_time.webp'
 
 export default function Landing() {
   const [email, setEmail] = useState('')
@@ -37,7 +38,7 @@ export default function Landing() {
         <DemoSection />
 
         <PricingSection />
-        <CtaSection email={email} setEmail={setEmail} />
+        <CtaSection />
       </main>
     </Layout>
   )
@@ -134,38 +135,6 @@ function FeaturesSection() {
 }
 
 function DemoSection() {
-  const features = [
-    {
-      image: GeneralResults,
-      alt: 'Adaptive Learning',
-      description:
-        'Our AI-powered system adapts to your skill level, providing personalized exercises to improve your weaknesses.',
-    },
-    {
-      image: TimeFeedBack,
-      alt: 'Real Code Snippets',
-      description:
-        'Practice with actual code from popular libraries and frameworks, preparing you for real-world scenarios.',
-    },
-    {
-      image: HeatMap,
-      alt: 'Detailed Analytics',
-      description:
-        'Track your progress with comprehensive metrics, identifying areas for improvement and celebrating your achievements.',
-    },
-    {
-      image: Restart,
-      alt: 'Speed Challenges',
-      description:
-        'Compete against yourself or others in timed challenges to push your limits and improve rapidly.',
-    },
-    {
-      image: Table,
-      alt: 'Speed Challenges',
-      description:
-        'Compete against yourself or others in timed challenges to push your limits and improve rapidly.',
-    },
-  ]
   return (
     <section className="py-20 dark:bg-gray-900 sm:py-20">
       <div className="container m-auto px-4 md:px-6">
@@ -189,12 +158,12 @@ function DemoSection() {
               </Button>
             </Link>
           </div>
-          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 rounded-2xl p-6 md:grid-cols-2">
+          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-2 rounded-2xl p-6 md:grid-cols-2">
             {/* First row */}
 
-            <div className="group relative overflow-hidden rounded-2xl bg-white p-4 shadow-md transition-all duration-300 hover:shadow-lg md:col-span-2">
+            <div className="group relative overflow-hidden rounded-2xl p-4 transition-all duration-300 hover:shadow-lg md:col-span-2">
               <img
-                src={TimeFeedBack}
+                src={InRealTime}
                 alt="Real Time Feedback"
                 className="h-full w-full rounded-2xl object-contain transition-all duration-300 group-hover:blur-sm"
               />
@@ -204,15 +173,15 @@ function DemoSection() {
               </div>
             </div>
 
-            <div className="group relative overflow-hidden rounded-2xl bg-white p-4 shadow-md transition-all duration-300 hover:shadow-lg md:col-span-2">
-              <div className="h-64">
+            <div className="group relative w-3/4 justify-self-center overflow-hidden rounded-2xl bg-white p-4 shadow-md transition-all duration-300 hover:shadow-lg md:col-span-2">
+              <div className="flex justify-center text-center">
                 <img
                   src={HeatMap}
                   alt="Keyboard Heatmap"
-                  className="h-full w-full rounded-2xl object-contain transition-all duration-300 group-hover:blur-sm"
+                  className="h-full w-3/4 rounded-2xl object-contain transition-all duration-300 group-hover:blur-sm"
                 />
               </div>
-              <div className="absolute inset-0 top-14 z-10 flex items-center justify-center text-lg font-semibold text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="absolute inset-0 top-14 z-10 flex items-center justify-center p-6 text-center text-base font-semibold text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 Keyboard heatmap with key usage frequency based on asserts or
                 fails
               </div>
@@ -228,11 +197,11 @@ function PricingSection() {
   const plans = [
     {
       name: 'Why Swift Key?',
-      price: '$0.00',
+
       features: [
         'Swift Key enhances coding productivity by training developers to type faster and more accurately, turning keyboard proficiency into a competitive advantage ',
         'With instant character-by-case feedback and performance metrics (WPM, accuracy rates, keyboard heatmap) Swift Key helps you identify and improve your typing weaknesses.',
-        'With instant feedback and detailed stats, Swift Key helps you identify and fix typing weaknesses.',
+        'Practice typing with Winnipeg trivia, or level up your JavaScript skills in code mode',
       ],
     },
     {
@@ -240,8 +209,8 @@ function PricingSection() {
 
       features: [
         'Swift Key was born from my self-taught coding journey, where I discovered that typing speed and accuracy are fundamental to programming success.',
-        'After creating over 900 programming notes in Obsidian, I wanted to share my accumulated knowledge by incorporating real coding snippets into the typing practice.',
-        'I built Swift Key to help others master the essential skill of typing while learning from real programming examples.',
+        'After creating over 900 programming notes in Obsidian, I decided to share my knowledge by writing myself the coding snippets of the code learner mode.',
+        'I designed Swift Key with a dual purpose: helping everyone type better while enabling developers to strengthen their coding knowledge.',
       ],
     },
   ]
@@ -283,19 +252,7 @@ function PricingSection() {
   )
 }
 
-function CtaSection({
-  email,
-  setEmail,
-}: {
-  email: string
-  setEmail: (email: string) => void
-}) {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission
-    console.log('Submitted email:', email)
-  }
-
+function CtaSection() {
   return (
     <section className="py-20 sm:py-20">
       <div className="container px-4 md:px-6">
