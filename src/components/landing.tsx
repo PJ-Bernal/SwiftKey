@@ -88,7 +88,7 @@ function FeaturesSection() {
       icon: Keyboard,
       title: 'Adaptive Learning',
       description:
-        'Our AI-powered system adapts to your skill level, providing personalized exercises to improve your weaknesses.',
+        'Our in-real-time system provides instant feedback that will enhance your speed and accuracy.',
     },
     {
       icon: Code,
@@ -216,8 +216,8 @@ function PricingSection() {
   ]
 
   return (
-    <section id="about" className="sm:py-15 py-20 dark:bg-gray-900">
-      <div className="container px-4 md:px-6">
+    <section id="about" className="py-20 dark:bg-gray-900 sm:py-20">
+      <div className="container m-auto px-4 md:px-6">
         <h2 className="mb-12 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text pb-5 text-center text-3xl font-bold tracking-tight text-transparent sm:text-5xl">
           About Swift Key!
         </h2>
@@ -255,7 +255,7 @@ function PricingSection() {
 function CtaSection() {
   return (
     <section className="py-20 sm:py-20">
-      <div className="container px-4 md:px-6">
+      <div className="container m-auto px-4 md:px-6">
         <div className="flex flex-col items-center text-center">
           <h2 className="mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text pb-10 text-3xl font-bold tracking-tight text-transparent sm:text-5xl">
             Ready to Transform Your Coding?
