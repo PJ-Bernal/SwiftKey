@@ -119,7 +119,7 @@ export function TypeWriter() {
                 Classic mode
               </CardTitle>
               <p className="text-sm text-muted-foreground sm:text-base">
-                You will have 60 seconds to write as fast as you can.
+                You will have 60 seconds to type as fast as you can.
               </p>
             </CardHeader>
             <CardContent className="pb-5">
